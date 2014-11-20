@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+    <title>Find Songs on GrooveShark</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/css/bootstrap-theme.min.css">
+</head>
+
+<body ng-app="groove">
+<div ng-controller="AppCtrl">
+    <form class="form-inline text-center" role="form">
+        <input type="text" placeholder="Song Name" ng-model="Song.name"/>
+        <input type="text" placeholder="Song Artist" ng-model="Song.artist"/>
+        <button type="button" class="btn btn-danger" ng-click="search()">Submit</button>
+    </form>
+    Results:
+    <ul>
+        <li ng-repeat="Song in results">
+            {{Song.name}} {{Song.artist}}
+        </li>
+    </ul>
+</div>
+<div ng-controller="ApiCtrl">
+    <input type="text" ng-model="searchTerm" placeholder="Search term">
+    <button type="button" class="btn btn-warning" ng-click="search()">Search</button>
+    <ul ng-repeat="tweet in searchResult.results">
+        Results:
+        <li>{{tweet.text}}</li>
+    </ul>
+</div>
+<div ng-controller="PostsCtrl">
+    <ul ng-repeat="post in posts">
+        <li>{{post.title}}</li>
+    </ul>
+</div>
+
+
+
+    <script src="dist/js/angular.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <!-- This should be inserted in the page *before* any page-specific JS -->
+    <script src="js/app.js"></script>
+</body>
+</html>
+
+

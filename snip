@@ -1,0 +1,76 @@
+Tinysong api key f6834955de245c39810cf059ce77da5d
+    <script>
+        $("#submit").click(function() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://tinysong.com/b/Girl+Talk+Ask+About+Me?format=json&key=f6834955de245c39810cf059ce77da5d&callback=jsonpCallback',
+//                url: 'http://tinysong.com/b/' + $("#Artist").val() + '?format=json&key=f6834955de245c39810cf059ce77da5d',
+                dataType: 'jsonp',
+                success: function (response) {
+                    console.log(response);
+//                    $('.content').append(response);
+                },
+                error: function(e){
+                    console.log(e.message);
+                }
+            })
+        });
+    </script>
+
+    var express = require('express');
+    var app = express();
+
+    app.set('port', (process.env.PORT || 5000));
+    app.use(express.static(__dirname + '/public'));
+
+    app.listen(app.get('port'), function() {
+      console.log("Node app is running at localhost:" + app.get('port'))
+    });
+
+    $("#submit").click(function() {
+        $.ajax({
+            url: 'www.http://tinysong.com/b/' + $("#Artist").val() + '?format=json&key=f6834955de245c39810cf059ce77da5d',
+            type: 'get',
+            dataType: 'json',
+            success: function (response) {
+                console.log(response);
+                $('.content').append(response);
+            }
+        })
+    });
+
+    var groove = angular.module("groove", []);
+
+    groove.controller("AppCtrl", function($http){
+        $scope.Song    = {};
+        $scope.results = [];
+
+        $scope.search = function() {
+            /* the $http service allows you to make arbitrary ajax requests.
+             * in this case you might also consider using angular-resource and setting up a
+             * User $resource. */
+            $http.get('/question', { params: song },
+                function(response) { $scope.results = response; },
+                function(failure) { console.log("failed:" + failure);}
+            )};
+    });
+
+    var TinyKey = "f6834955de245c39810cf059ce77da5d";
+    function TinySong (A, S){
+        A = A.replace(/ /g,"+");
+        S = S.replace(/ /g,"+");
+        var url = 'http://tinysong.com/b/' + A + "+" + S + '?format=json&key=' + TinyKey;
+        http.get(url, function(res){
+            var bodyChunks = [];
+            res.on('data', function(chunk) {
+                bodyChunks.push(chunk);
+            }).on('end', function() {
+                var body = Buffer.concat(bodyChunks);
+                if(body === null){
+                    console.log('NOT FOUND');
+                }else{
+                    console.log('' + body);
+                }
+            })
+        });
+    }
