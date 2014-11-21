@@ -16,9 +16,10 @@ var myFirebaseRef = new Firebase("https://groovebmp.firebaseio.com/" + BPM);
 
 function TinySong (A, S){
     //var TinyKey = "f6834955de245c39810cf059ce77da5d";
+    var TinyKeyFPCON = "5ab99277ab6695b1fe456a9c2132a4ab";
     A = A.replace(/ /g,"+");
     S = S.replace(/ /g,"+");
-    var url = 'http://tinysong.com/b/' + A + "+" + S + '?format=json&key=f6834955de245c39810cf059ce77da5d';
+    var url = 'http://tinysong.com/b/' + A + "+" + S + '?format=json&key=' + TinyKeyFPCON;
     http.get(url, function(res){
         var data = '';
         res.on('data', function (chunk){
@@ -34,7 +35,6 @@ function TinySong (A, S){
                 console.log('<======================ERROR WITH TINYSONG================================>');
             }else{
                 ParseTinySong(obj);
-                console.log(obj);
             }
         });
     });
@@ -45,7 +45,6 @@ function ParseTinySong (obj){
     var SongName = obj["SongName"];
     var ArtistName = obj["ArtistName"];
     var AlbumName = obj["AlbumName"];
-//     console.log("SongID " + SongID + " SongName " + SongName + " ArtistName " + ArtistName + " AlbumName " + AlbumName)  
     if(typeof SongID != 'undefined'){
         var Songs = myFirebaseRef.child(SongID);
         Songs.set({
@@ -67,7 +66,7 @@ function splitTweet(TweetToSplit) {
     var ArtistsNm = ArtistsStr.split("/");
     TinySong(ArtistsNm[0], Song);
 }
-T.get('statuses/user_timeline', { screen_name: BPM, count: 1 }, function(err, data, response) {
+T.get('statuses/user_timeline', { screen_name: BPM, count: 10 }, function(err, data) {
     data.forEach(function(values){
         var tweet = values.text;
         splitTweet(tweet);
@@ -76,17 +75,13 @@ T.get('statuses/user_timeline', { screen_name: BPM, count: 1 }, function(err, da
 
 
 
-// WORKING BELOW THIS LINE
-//var app = express();
-//
-//app.use(express.static(__dirname + '/public'));
+//WORKING BELOW THIS LINE
+var app = express();
 
-//app.get('/question', function(req, res){
-//    res.send(req.body);
-//});
+app.use(express.static(__dirname + '/public'));
 
-// Start the server on port 3000
-//app.listen(process.env.PORT || 3000);
+//Start the server on port 3000
+app.listen(process.env.PORT || 3000);
 
-// Print out a nice message so you know that the server started
-//console.log('Server running on port 3000');
+//Print out a nice message so you know that the server started
+console.log('Server running on port 3000');
