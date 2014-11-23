@@ -3,8 +3,10 @@
  */
 var app = angular.module("sampleApp", ["firebase"]);
 app.controller("SampleCtrl", function($scope, $firebase) {
-    var ref = new Firebase("https://groovebmp.firebaseio.com/");
+    var ref = new Firebase("https://groovebmp.firebaseio.com/bpm_playlist");
     var sync = $firebase(ref);
     // create a synchronized array for use in our HTML code
-    $scope.messages = sync.$asArray();
+    $scope.bpmSong = sync.$asArray();
+
+
 });
