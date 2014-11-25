@@ -6,19 +6,11 @@
 </head>
 
 
-<body ng-app="sampleApp">
-<div ng-controller="SampleCtrl">
-    <!--<GroovePlayer></GroovePlayer>-->
+<body ng-app="GrooveApp">
+<div ng-controller="MainCtrl">
     <div class="col-md-12" id="radio">
         <button class="btn-lg btn-danger" ng-click="count = count - 1" ng-init="count=0">Previous</button>
-        <object width="250" height="40">
-            <param name="movie" value="http://grooveshark.com/songWidget.swf">
-            <param name="wmode" value="window">
-            <param name="allowScriptAccess" value="always">
-            <param name="flashvars" value="hostname=cowbell.grooveshark.com&amp;songIDs=26593443&amp;style=metal&amp;p=0">
-            <embed src="http://grooveshark.com/songWidget.swf" type="application/x-shockwave-flash" width="250" height="40"
-                   flashvars="hostname=cowbell.grooveshark.com&amp;songIDs=26593443&amp;style=metal&amp;p=0" allowscriptaccess="always" wmode="window"/>
-        </object>
+        <flash-widget width='250' height='40' src='http&#58;//grooveshark.com/songWidget.swf' songID='{{bpmSong[0].$id}}' ></flash-widget>
         <button class="btn-lg btn-danger" ng-click="count = count + 1">Next</button>
     </div>
     <div class="col-md-12">
