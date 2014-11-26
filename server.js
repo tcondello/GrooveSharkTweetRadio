@@ -6,14 +6,13 @@ var http = require("http");
 var Twit = require("twit");
 var Firebase = require("firebase");
 var T = new Twit({
-    consumer_key:         'tQBgTC7WSC2YKDYkdQgDCPVtx'
-    , consumer_secret:      'xpMbSpmSy6d4HpKT0VFch70YNqBhTydDSXbrfW3137KJw9iI4C'
-    , access_token:         '1374765799-O40L3jHmUeEVZbSpzaLiLLxyGlQgRPbSgSLtaVX'
-    , access_token_secret:  'OYwgOSuqLpfiOtta5n3EpVP4u4debCClsfEEaWgNwqqGh'
+    consumer_key:         'tQBgTC7WSC2YKDYkdQgDCPVtx',
+    consumer_secret:      'xpMbSpmSy6d4HpKT0VFch70YNqBhTydDSXbrfW3137KJw9iI4C',
+    access_token:         '1374765799-O40L3jHmUeEVZbSpzaLiLLxyGlQgRPbSgSLtaVX',
+    access_token_secret:  'OYwgOSuqLpfiOtta5n3EpVP4u4debCClsfEEaWgNwqqGh'
 });
-var BPM = "bpm_playlist"
+var BPM = "bpm_playlist";
 var myFirebaseRef = new Firebase("https://groovebmp.firebaseio.com/" + BPM);
-var notFound = 0
 
 function TinySong (A, S){
     //var TinyKey = "f6834955de245c39810cf059ce77da5d";
@@ -33,13 +32,12 @@ function TinySong (A, S){
 }
 
 function ParseTinySong (obj){
-    var SongID = obj["SongID"]
-    var SongName = obj["SongName"]
-    var ArtistName = obj["ArtistName"]
-    var AlbumName = obj["AlbumName"]
-//     console.log("SongID " + SongID + " SongName " + SongName + " ArtistName " + ArtistName + " AlbumName " + AlbumName)  
+    var SongID = obj["SongID"];
+    var SongName = obj["SongName"];
+    var ArtistName = obj["ArtistName"];
+    var AlbumName = obj["AlbumName"];
     if(typeof SongID != 'undefined'){
-        var Songs = myFirebaseRef.child(SongID)
+        var Songs = myFirebaseRef.child(SongID);
         Songs.set({
             ArtistName: ArtistName,
             SongName: SongName,
@@ -47,9 +45,7 @@ function ParseTinySong (obj){
         });
     }else{
         console.log("Nothing here");
-//         notFound = notFound + 1;
     }
-//     console.log("We could not find " + notFound + " Songs")
 }
 
 function splitTweet(TweetToSplit) {
@@ -61,7 +57,7 @@ function splitTweet(TweetToSplit) {
     var ArtistsNm = ArtistsStr.split("/");
     TinySong(ArtistsNm[0], Song);
 }
-T.get('statuses/user_timeline', { screen_name: BPM, count: 100 }, function(err, data, response) {
+T.get('statuses/user_timeline', { screen_name: BPM, count: 500 }, function(err, data) {
     data.forEach(function(values){
         var tweet = values.text;
         splitTweet(tweet);
