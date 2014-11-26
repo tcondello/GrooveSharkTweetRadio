@@ -12,19 +12,19 @@ angular.module("GrooveApp", ["firebase"])
 
         return {
             restrict: 'E',
+            controller: 'MainCtrl',
             scope: {
                 width:'=',
                 height:'=',
                 src: '=',
                 songID: '='
             },
-            template: '<object width="{{width}}" height="{{height}}">'+
+            template: '<object width="250" height="40">'+
             '<param name="movie" value="http://grooveshark.com/songWidget.swf">'+
                 '<param name="wmode" value="window">'+
             '<param name="allowScriptAccess" value="always">'+
-                '<param name="flashvars"value="hostname=cowbell.grooveshark.com&amp;songIDs="{{songId}}"&amp;style=metal&amp;p=0">'+
-            '<embed src="http://grooveshark.com/songWidget.swf" type="application/x-shockwave-flash"width="{{width}}"height="{{height}}"flashvars="hostname=cowbell.grooveshark.com&amp;songIDs="{{songId}}"&amp;style=metal&amp;p=0" allowscriptaccess="always" wmode="window"/>'+
+                '<param name="flashvars"value="hostname=cowbell.grooveshark.com&amp;songIDs="{{songID}}"&amp;style=metal&amp;p=0">'+
+            '<embed src="http://grooveshark.com/songWidget.swf" type="application/x-shockwave-flash"width="250"height="40"flashvars="hostname=cowbell.grooveshark.com&amp;songIDs="{{songID}}"&amp;style=metal&amp;p=0" allowscriptaccess="always" wmode="window"></embed>'+
                 '</object>'
         }
-
     });
