@@ -11,9 +11,10 @@ angular.module("GrooveApp", ["firebase"])
     })
     .directive('flashWidget', function(){
         return{
-            restrict: 'EA',
+            restrict: 'E',
+            scope: {id: '='},
             template: '<object width="250" height="40">'+
-            '<embed src="http://grooveshark.com/songWidget.swf" type="application/x-shockwave-flash" width="250" height="40" flashvars="hostname=cowbell.grooveshark.com&songIDs="{{}}"&style=metal&p=0" allowscriptaccess="always" wmode="window"></embed>'+
+            '<embed src="http://grooveshark.com/songWidget.swf" type="application/x-shockwave-flash" width="250" height="40" flashvars="hostname=cowbell.grooveshark.com&songIDs={{id[0].$id}}&style=metal&p=0" allowscriptaccess="always" wmode="window"></embed>'+
             '</object>'
         }
     });

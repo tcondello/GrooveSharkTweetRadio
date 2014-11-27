@@ -10,16 +10,16 @@
 <div ng-controller="MainCtrl">
     <!--<div class="col-md-12" id="radio">-->
         <!--<button class="btn-lg btn-danger" ng-click="count = count - 1" ng-init="count=0">Previous</button>-->
-        <!--<flash-widget songid="{{bpmSong[0].$id}}"></flash-widget>-->
+        <flash-widget id="bpmSong"></flash-widget>
         <!--<button class="btn-lg btn-danger" ng-click="count = count + 1">Next</button>-->
     <!--</div>-->
     <div class="col-md-12">
        {{bpmSong[0]}}
     </div>
-    <!--<object width="250" height="40">-->
-        <!--<embed src="http://grooveshark.com/songWidget.swf" type="application/x-shockwave-flash" width="250"height="40"flashvars="hostname=cowbell.grooveshark.com&amp;songIDs=4453334&amp;style=metal&amp;p=0" allowscriptaccess="always" wmode="window"/>-->
-    <!--</object>-->
-    <!--"Song 0: 4453334"-->
+    <object width="250" height="40">
+        <embed src="http://grooveshark.com/songWidget.swf" type="application/x-shockwave-flash" width="250"height="40"flashvars="hostname=cowbell.grooveshark.com&amp;songIDs=4453334&amp;style=metal&amp;p=0" allowscriptaccess="always" wmode="window"/>
+    </object>
+    "Song 0: 4453334"
 </div>
 
 
