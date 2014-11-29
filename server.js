@@ -12,6 +12,8 @@ var T = new Twit({
     access_token_secret:  'OYwgOSuqLpfiOtta5n3EpVP4u4debCClsfEEaWgNwqqGh'
 });
 var BPM = "bpm_playlist";
+var countEntered = 0;
+var countSkipped = 0;
 var myFirebaseRef = new Firebase("https://groovebmp.firebaseio.com/" + BPM);
 
 function TinySong (A, S){
@@ -26,7 +28,7 @@ function TinySong (A, S){
         });
         res.on('end', function(){
             var obj = JSON.parse(data);
-            if(obj['error'] != 'undefined'){
+            if(typeof obj['error'] != 'undefined'){
                 console.log('===============================');
                 console.log('ERROR: ' + obj['error']);
                 console.log('===============================');
@@ -36,7 +38,6 @@ function TinySong (A, S){
         });
     });
 }
-
 function ParseTinySong (obj){
     var SongID = obj["SongID"];
     var SongName = obj["SongName"];
@@ -49,11 +50,11 @@ function ParseTinySong (obj){
             SongName: SongName,
             AlbumName: AlbumName
         });
+        countEntered = countEntered + 1;
     }else{
-        console.log("Nothing here");
+        countSkipped = countSkipped + 1;
     }
 }
-
 function splitTweet(TweetToSplit) {
     var arrayOfTweets = TweetToSplit.split("-");
     var ArtistsStr = arrayOfTweets[0];
@@ -63,12 +64,17 @@ function splitTweet(TweetToSplit) {
     var ArtistsNm = ArtistsStr.split("/");
     TinySong(ArtistsNm[0], Song);
 }
-T.get('statuses/user_timeline', { screen_name: BPM, count: 1000 }, function(err, data) {
-    data.forEach(function(values){
-        var tweet = values.text;
-        splitTweet(tweet);
+function start(x) {
+    T.get('statuses/user_timeline', {screen_name: BPM, count: x}, function (err, data) {
+        data.forEach(function (values) {
+            var tweet = values.text;
+            splitTweet(tweet);
+        });
     });
-});
+}
+start(1000);
+console.log('# added to FireBase= ' + countEntered);
+console.log('# skipped = ' + countSkipped);
 
 
 
