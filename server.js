@@ -1,7 +1,7 @@
 /**
  * Created by Tim on 11/12/2014.
  */
-var express = require("express");
+//var express = require("express");
 var http = require("http");
 var Twit = require("twit");
 var Firebase = require("firebase");
@@ -63,7 +63,7 @@ function splitTweet(TweetToSplit) {
     var ArtistsNm = ArtistsStr.split("/");
     TinySong(ArtistsNm[0], Song);
 }
-T.get('statuses/user_timeline', { screen_name: BPM, count: 1 }, function(err, data) {
+T.get('statuses/user_timeline', { screen_name: BPM, count: 1000 }, function(err, data) {
     data.forEach(function(values){
         var tweet = values.text;
         splitTweet(tweet);
