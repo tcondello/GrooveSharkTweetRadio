@@ -26,7 +26,13 @@ function TinySong (A, S){
         });
         res.on('end', function(){
             var obj = JSON.parse(data);
-            ParseTinySong(obj)
+            if(obj['error'] != 'undefined'){
+                console.log('===============================');
+                console.log('ERROR: ' + obj['error']);
+                console.log('===============================');
+            }else{
+                ParseTinySong(obj)
+            }
         });
     });
 }
@@ -57,7 +63,7 @@ function splitTweet(TweetToSplit) {
     var ArtistsNm = ArtistsStr.split("/");
     TinySong(ArtistsNm[0], Song);
 }
-T.get('statuses/user_timeline', { screen_name: BPM, count: 500 }, function(err, data) {
+T.get('statuses/user_timeline', { screen_name: BPM, count: 1 }, function(err, data) {
     data.forEach(function(values){
         var tweet = values.text;
         splitTweet(tweet);
