@@ -1,3 +1,26 @@
+    .directive('flashWidget', function($compile){
+
+        return {
+            restrict: 'EA',
+            scope: {
+                width:'=',
+                height:'=',
+                src: '=',
+                songID: '='
+            },
+            template: '<object width="250" height="40">'+
+            '<param name="movie" value="http://grooveshark.com/songWidget.swf">'+
+                '<param name="wmode" value="window">'+
+            '<param name="allowScriptAccess" value="always">'+
+                '<param name="flashvars"value="hostname=cowbell.grooveshark.com&songIDs=""&style=metal&p=0">'+
+            '<embed src="http://grooveshark.com/songWidget.swf" type="application/x-shockwave-flash" width="250" height="40" flashvars="hostname=cowbell.grooveshark.com&songIDs="{{songID}}"&style=metal&p=0" allowscriptaccess="always" wmode="window"></embed>'+
+                '</object>'
+        }
+    });
+
+
+
+
 Tinysong api key f6834955de245c39810cf059ce77da5d
     <script>
         $("#submit").click(function() {
