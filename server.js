@@ -75,20 +75,3 @@ function start(x) {
 start(1000);
 console.log('# added to FireBase= ' + countEntered);
 console.log('# skipped = ' + countSkipped);
-
-
-
-// WORKING BELOW THIS LINE
-//var app = express();
-//
-//app.use(express.static(__dirname + '/public'));
-
-//app.get('/question', function(req, res){
-//    res.send(req.body);
-//});
-
-// Start the server on port 3000
-//app.listen(process.env.PORT || 3000);
-
-// Print out a nice message so you know that the server started
-//console.log('Server running on port 3000');
