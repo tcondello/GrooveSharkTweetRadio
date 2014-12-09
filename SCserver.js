@@ -18,7 +18,7 @@ function SoundSong (A, S){
     var SoundKey = "acefae469fefbc074fb7ad9bb480a56d";
     var xtraKey = "4346c8125f4f5c40ad666bacd8e96498";
     S = S.replace(/ /g,"+");
-    var url = 'http://api.soundcloud.com/tracks.json?client_id=' + SoundKey + '&q=' + S +'&limit=1'
+    var url = 'http://api.soundcloud.com/tracks.json?client_id=' + SoundKey + '&q=' + S +'&limit=1';
     http.get(url, function(res){
        var data = '';
        res.on('data', function (chunk){
