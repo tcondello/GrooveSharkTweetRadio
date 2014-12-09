@@ -11,7 +11,6 @@ var T = new Twit({
     access_token:         '1374765799-O40L3jHmUeEVZbSpzaLiLLxyGlQgRPbSgSLtaVX',
     access_token_secret:  'OYwgOSuqLpfiOtta5n3EpVP4u4debCClsfEEaWgNwqqGh'
 });
-var BPM = "bpm_playlist";
 var myFirebaseRef = new Firebase("https://groovebmp.firebaseio.com/SoundCloud");
 
 function SoundSong (A, S){
@@ -26,7 +25,7 @@ function SoundSong (A, S){
        });
        res.on('end', function(){
            var obj = JSON.parse(data);
-//            console.log(obj[0]);
+            //console.log(obj[0]);
            ParseSoundSong(obj);
            
 //            if(typeof obj['error'] != 'undefined'){
@@ -42,16 +41,14 @@ function SoundSong (A, S){
 }
 function ParseSoundSong (obj){
    if(typeof obj[0] != 'undefined'){
-       var SongID = obj[0].id;
        var SongName = obj[0].title;
-       var Stream_url = obj[0].stream_url;
-       if(typeof Stream_url === 'undefined'){
-           Stream_url = 'null';
+       var uri = obj[0].uri;
+       if(typeof uri === 'undefined'){
+           uri = 'null';
        }   
-       var Songs = myFirebaseRef.child(SongID);
+       var Songs = myFirebaseRef.child(uri);
        Songs.set({
-           Stream_url: Stream_url,
-           SongName: SongName,
+           SongName: SongName
        });
    }else{
        console.log(obj);
@@ -67,17 +64,19 @@ function splitTweet(TweetToSplit) {
     var SongStr = arrayOfTweets[1];
     var SongNm = SongStr.split("playing");
     var Song = SongNm[0].trim();
-    var ArtistsNm = ArtistsStr.split("/");
-    SoundSong(ArtistsNm[0], Song);
+    var ArtistsNm = ArtistsStr.replace(/\//g,"+");
+    var ArtistsNm = ArtistsNm.trim().replace(/ /g,"+");
+    console.log(ArtistsNm, Song);
 }
-function start(x) {
-    T.get('statuses/user_timeline', {screen_name: BPM, count: x}, function (err, data) {
+function start(Tuser, x) {
+    T.get('statuses/user_timeline', {screen_name: Tuser, count: x}, function (err, data) {
         data.forEach(function (values) {
             var tweet = values.text;
             splitTweet(tweet);
+            console.log(tweet);
         });
     });
 }
-start(500);
+start("bpm_playlist", 10);
 // console.log('# added to FireBase= ' + countEntered);
 // console.log('# skipped = ' + countSkipped);
