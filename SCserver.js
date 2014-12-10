@@ -19,15 +19,15 @@ function SoundSong (A, S){
     S = S.replace(/ /g,"+");
     var url = 'http://api.soundcloud.com/tracks.json?client_id=' + SoundKey + '&q=' + S +'&limit=1';
     http.get(url, function(res){
-       var data = '';
-       res.on('data', function (chunk){
-           data += chunk;
-       });
-       res.on('end', function(){
-           var obj = JSON.parse(data);
+        var data = '';
+        res.on('data', function (chunk){
+            data += chunk;
+        });
+        res.on('end', function(){
+            var obj = JSON.parse(data);
             //console.log(obj[0]);
-           ParseSoundSong(obj);
-           
+            ParseSoundSong(obj);
+
 //            if(typeof obj['error'] != 'undefined'){
 //                console.log('===============================');
 //                console.log('ERROR: ' + obj['error']);
@@ -35,30 +35,28 @@ function SoundSong (A, S){
 //            }else{
 //                
 //            }
-       });
-   });
-
+        });
+    });
 }
 function ParseSoundSong (obj){
-   if(typeof obj[0] != 'undefined'){
-       var SongName = obj[0].title;
-       var uri = obj[0].uri;
-       if(typeof uri === 'undefined'){
-           uri = 'null';
-       }   
-       var Songs = myFirebaseRef.child(uri);
-       Songs.set({
-           SongName: SongName
-       });
-   }else{
-       console.log(obj);
-   }
+    if(typeof obj[0] != 'undefined'){
+        var id = obj[0].id;
+        var SongName = obj[0].title;
+        var uri = obj[0].uri;
+        if(typeof uri === 'undefined'){
+            uri = 'null';
+        }
+        var Songs = myFirebaseRef.child(id);
+        Songs.set({
+            uri: uri,
+            SongName: SongName
+        });
+    }else{
+        console.log(obj);
+    }
 }
-
-
-
-
 function splitTweet(TweetToSplit) {
+    var regexObj = /@/g;
     var arrayOfTweets = TweetToSplit.split("-");
     var ArtistsStr = arrayOfTweets[0];
     var SongStr = arrayOfTweets[1];
@@ -66,17 +64,24 @@ function splitTweet(TweetToSplit) {
     var Song = SongNm[0].trim();
     var ArtistsNm = ArtistsStr.replace(/\//g,"+");
     var ArtistsNm = ArtistsNm.trim().replace(/ /g,"+");
-    console.log(ArtistsNm, Song);
+    res = regexObj.test(ArtistsNm);
+    if (SongNm != "") {
+        if (res) {
+            console.log("BPM Advertisement")
+        } else {
+            SoundSong(ArtistsNm, Song);
+        }
+    }else{
+        console.log("Empty")
+    }
 }
 function start(Tuser, x) {
     T.get('statuses/user_timeline', {screen_name: Tuser, count: x}, function (err, data) {
         data.forEach(function (values) {
             var tweet = values.text;
             splitTweet(tweet);
-            console.log(tweet);
+//             console.log(tweet);
         });
     });
 }
-start("bpm_playlist", 10);
-// console.log('# added to FireBase= ' + countEntered);
-// console.log('# skipped = ' + countSkipped);
+start("bpm_playlist", 2000);
