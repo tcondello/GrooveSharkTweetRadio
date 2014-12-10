@@ -5,6 +5,8 @@
 var http = require("http");
 var Twit = require("twit");
 var Firebase = require("firebase");
+var CronJob = require('cron').CronJob;
+var moment = require('moment');
 var T = new Twit({
     consumer_key:         'tQBgTC7WSC2YKDYkdQgDCPVtx',
     consumer_secret:      'xpMbSpmSy6d4HpKT0VFch70YNqBhTydDSXbrfW3137KJw9iI4C',
@@ -17,7 +19,8 @@ function SoundSong (A, S){
     var SoundKey = "acefae469fefbc074fb7ad9bb480a56d";
     var xtraKey = "4346c8125f4f5c40ad666bacd8e96498";
     S = S.replace(/ /g,"+");
-    var url = 'http://api.soundcloud.com/tracks.json?client_id=' + SoundKey + '&q=' + S +'&limit=1';
+    A = A.replace(/ /g,"+");
+    var url = 'http://api.soundcloud.com/tracks.json?client_id=' + SoundKey + '&q=' + A + S +'&limit=1';
     http.get(url, function(res){
         var data = '';
         res.on('data', function (chunk){
@@ -27,14 +30,6 @@ function SoundSong (A, S){
             var obj = JSON.parse(data);
             //console.log(obj[0]);
             ParseSoundSong(obj);
-
-//            if(typeof obj['error'] != 'undefined'){
-//                console.log('===============================');
-//                console.log('ERROR: ' + obj['error']);
-//                console.log('===============================');
-//            }else{
-//                
-//            }
         });
     });
 }
@@ -43,13 +38,15 @@ function ParseSoundSong (obj){
         var id = obj[0].id;
         var SongName = obj[0].title;
         var uri = obj[0].uri;
+        var SongDate = moment().format('l h:mm a');
         if(typeof uri === 'undefined'){
             uri = 'null';
         }
         var Songs = myFirebaseRef.child(id);
         Songs.set({
             uri: uri,
-            SongName: SongName
+            SongName: SongName,
+            Date: SongDate
         });
     }else{
         console.log(obj);
@@ -65,14 +62,10 @@ function splitTweet(TweetToSplit) {
     var ArtistsNm = ArtistsStr.replace(/\//g,"+");
     var ArtistsNm = ArtistsNm.trim().replace(/ /g,"+");
     res = regexObj.test(ArtistsNm);
-    if (SongNm != "") {
-        if (res) {
-            console.log("BPM Advertisement")
-        } else {
-            SoundSong(ArtistsNm, Song);
-        }
-    }else{
-        console.log("Empty")
+    if (res) {
+        console.log("BPM Advertisement")
+    } else {
+        SoundSong(ArtistsNm, Song);
     }
 }
 function start(Tuser, x) {
@@ -84,4 +77,8 @@ function start(Tuser, x) {
         });
     });
 }
-start("bpm_playlist", 2000);
+new CronJob('0 */5 * * * *', function(){
+// new CronJob('*/10 * * * * *', function(){
+    start("bpm_playlist", 3);
+    console.log('I Ran ' + moment().format('l h:mm a'));
+}, null, true);
