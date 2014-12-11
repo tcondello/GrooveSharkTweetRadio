@@ -5,7 +5,6 @@ angular.module("GrooveApp", ["firebase"])
     .controller("MainCtrl", function($scope, $firebase) {
         var ref = new Firebase("https://groovebmp.firebaseio.com/SoundCloud");
         var sync = $firebase(ref);
-        // create a synchronized array for use in our HTML code
         $scope.Song = sync.$asArray();
         $scope.count =0;
         $scope.selectedSong = {};

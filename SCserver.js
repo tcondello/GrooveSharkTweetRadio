@@ -61,7 +61,7 @@ function splitTweet(TweetToSplit) {
     var Song = SongNm[0].trim();
     var ArtistsNm = ArtistsStr.replace(/\//g,"+");
     var ArtistsNm = ArtistsNm.trim().replace(/ /g,"+");
-    res = regexObj.test(ArtistsNm);
+    res = /@/g.test(ArtistsNm);
     if (res) {
         console.log("BPM Advertisement")
     } else {
@@ -77,8 +77,8 @@ function start(Tuser, x) {
         });
     });
 }
-new CronJob('0 */5 * * * *', function(){
-// new CronJob('*/10 * * * * *', function(){
+//new CronJob('0 */5 * * * *', function(){
+new CronJob('*/10 * * * * *', function(){
     start("bpm_playlist", 3);
     console.log('I Ran ' + moment().format('l h:mm a'));
 }, null, true);
