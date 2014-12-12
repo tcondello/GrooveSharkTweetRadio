@@ -28,8 +28,14 @@ function SoundSong (A, S){
         });
         res.on('end', function(){
             var obj = JSON.parse(data);
+            if(typeof obj.errors != 'undefined'){
+                console.log('ERROR: ' + obj.errors[0].error_message);
+            }else if (obj = []){
+                console.log('NOTHING TO SEE HERE')
+            }else{
+                ParseSoundSong(obj)
+            }
             //console.log(obj[0]);
-            ParseSoundSong(obj);
         });
     });
 }
@@ -38,7 +44,7 @@ function ParseSoundSong (obj){
         var id = obj[0].id;
         var SongName = obj[0].title;
         var uri = obj[0].uri;
-        var SongDate = moment().format('l h:mm a');
+        var SongDate = moment().format('l h:mm:ss a');
         if(typeof uri === 'undefined'){
             uri = 'null';
         }
@@ -77,7 +83,7 @@ function start(Tuser, x) {
         });
     });
 }
-//new CronJob('0 */5 * * * *', function(){
+// new CronJob('0 */5 * * * *', function(){
 new CronJob('*/10 * * * * *', function(){
     start("bpm_playlist", 3);
     console.log('I Ran ' + moment().format('l h:mm a'));
