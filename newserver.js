@@ -1,5 +1,9 @@
 /**
- * Created by Mac-astr010 on 12/25/14.
+ * Created with GrooveSharkTweetRadio.
+ * User: astr010
+ * Date: 2014-12-14
+ * Time: 02:00 PM
+ * To change this template use Tools | Templates.
  */
 var http = require("http");
 var Twit = require("twit");
