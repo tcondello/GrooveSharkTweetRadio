@@ -9,12 +9,8 @@ angular.module("GrooveApp", ["firebase"])
         $scope.count =0;
         $scope.selectedSong = {};
         $scope.currentSong = function(){return $scope.selectedSong ; };
-
         $scope.selectSong = function (i){
             $scope.selectedSong = $scope.Song[i];
-        };
-        $scope.nextSong = function(){
-            $scope.count = $scope.count + 1
         };
     })
     .directive('flashWidget', function(){

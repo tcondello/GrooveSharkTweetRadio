@@ -1,5 +1,5 @@
 /**
- * Created by Mac-astr010 on 12/25/14.
+ * Created by Mac-astr010 on 12/14/14.
  */
 var http = require("http");
 var Twit = require("twit");
@@ -14,7 +14,7 @@ var T = new Twit({
 });
 var myFirebaseRef = new Firebase("https://groovebmp.firebaseio.com/SoundCloud");
 
-start("bpm_playlist", 100)
+start("bpm_playlist", 3);
 
 function start(Tuser, x) {
     T.get('statuses/user_timeline', {screen_name: Tuser, count: x}, function (err, data) {
@@ -22,16 +22,14 @@ function start(Tuser, x) {
             var tweet = values.text;
             var tweetData = new ParsedTweet(tweet);
             if (tweetData.isAdvertisement) return;
-            getSoundInfo(tweetData.song, tweetData.artistsNm, function(err, data) {
+            getSoundInfo(tweetData.songNm, tweetData.artistsNm, function(err, data) {
                 if (err) return;
                 var soundInfo = parseSoundSong(data);
                 if (!soundInfo) return;
-//                 var songs = myFirebaseRef.child(soundInfo.Date);
                 var songs = myFirebaseRef.child(soundInfo.id);
                 songs.set({
                     uri: soundInfo.uri,
                     SongName: soundInfo.SongName,
-//                     id: soundInfo.id,
                     Date: soundInfo.Date,
                     Tweet: tweet
                 });
@@ -42,13 +40,14 @@ function start(Tuser, x) {
 
 function ParsedTweet(tweet) {
     var arrayOfTweets = tweet.split("-");
-    this.tweet = tweet;
+
+    //this.tweet = tweet;
     this.artistsStr = arrayOfTweets[0];
     this.songStr = arrayOfTweets[1];
     this.songNm = this.songStr.split("playing");
     this.song = this.songNm[0].trim();
-    this.artistsNm = this.artistsStr.replace(/\//g,"+").trim().replace(/ /g,"+");
-    this.isAdvertisement = /@/g.test(this.artistsNm);
+    this.artistsNm = artistsStr.replace(/\//g,"+").trim().replace(/ /g,"+");
+    this.isAdvertisement = !!/@/g.test(this.artistsNm);
 }
 
 function getSoundInfo(songName, artistName, fn) {
@@ -82,7 +81,6 @@ function parseSoundSong(obj) {
         result.id = obj[0].id;
         result.SongName = obj[0].title;
         result.uri = obj[0].uri;
-//         result.Date = moment().format('YYMMDDHHMMSS');
         result.Date = moment().format('l h:mm:ss a');
         if(typeof result.uri === 'undefined'){
             result.uri = 'null';

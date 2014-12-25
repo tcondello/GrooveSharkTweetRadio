@@ -1,5 +1,5 @@
 
-<html lang="en">
+<html ng-app="GrooveApp" lang="en">
 <head>
     <title>AngularJS play BPM</title>
     <script>document.write('<base href="' + document.location + '" />');</script>
@@ -8,30 +8,48 @@
     <link rel="stylesheet" href="dist/css/bootstrap-theme.css"/>
 </head>
 
-<body ng-app="GrooveApp">
-<div class="container" ng-controller="MainCtrl">
-    <div class="text-center">
-        <h2>These are songs I scraped from
-            <a href="https://twitter.com/bpm_playlist">@bpm_playlist</a>
-        </h2>
-        Click buttons below to play song.
-        <p>
-            <button class="btn-danger" ng-click="selectSong(count = count - 1)" >Previous Song</button>
-            <button class="btn-danger" ng-click="selectSong(count)">Play Song</button>
-            <button class="btn-danger" ng-click="selectSong(count = count + 1)" >Next Song</button>
-        </p>
-        <flash-widget song="currentSong()"></flash-widget>
-        <h2>
-            Firebase Dump
-        </h2>
-        Date: {{selectedSong.Date}}
-        {{selectedSong}}
+<body ng-controller="MainCtrl">
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center">
+                <h3 class="panel-title">List of Songs</h3>
+                <p>Number of Songs: {{Song.length}}</p>
+            </div>
+            <div class="panel-body">
+                <div class="list-group" ng-show="Song.length > 0" ng-repeat="s in Song | orderBy: 'Date' :true">
+                    <a class="list-group-item">{{s.SongName}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="text-center">
+            <h2>These are songs I scraped from
+                <a href="https://twitter.com/bpm_playlist">@bpm_playlist</a>
+            </h2>
+            Click buttons below to play song.
+            <p>
+                <button class="btn-danger" ng-click="selectSong(count = count - 1)" >Previous Song</button>
+                <button class="btn-danger" ng-click="selectSong(count)">Play Song</button>
+                <button class="btn-danger" ng-click="selectSong(count = count + 1)" >Next Song</button>
+            </p>
+            <flash-widget song="currentSong()"></flash-widget>
+            <h2>
+                Firebase Dump
+            </h2>
+            <ul>Date: {{selectedSong.Date}}</ul>
+            <ul>uri: {{selectedSong.uri}}</ul>
+            <ul>Song Name: {{selectedSong.SongName}}</ul>
+            <ul>Tweet: {{selectedSong.Tweet}}</ul>
+            {{selectedSong}}
+        </div>
     </div>
 </div>
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="dist/js/bootstrap.js"></script>
 <script src="dist/js/angular.js"></script>
 <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
 <script src="https://cdn.firebase.com/libs/angularfire/0.8.2/angularfire.min.js"></script>
