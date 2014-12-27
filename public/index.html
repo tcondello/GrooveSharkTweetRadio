@@ -2,7 +2,6 @@
 <html ng-app="GrooveApp" lang="en">
 <head>
     <title>AngularJS play BPM</title>
-    <script>document.write('<base href="' + document.location + '" />');</script>
 
     <link rel="stylesheet" href="dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="dist/css/bootstrap-theme.css"/>
@@ -18,8 +17,8 @@
                 <h2 class="panel-title">List of Songs</h2>
                 <p>Number of Songs: {{Song.length}}</p>
             </div>
-            <div class="panel-body">
-                <div class="list-group" ng-show="Song.length > 0" ng-repeat="s in Song | orderBy: 'Date' :true">
+            <div class="panel-body" id="repeate">
+                <div class="list-group" ng-show="Song.length > 0" ng-repeat="s in Song | orderBy: 'Date' :true | limitTo: 100">
                     <a href="#" class="list-group-item" ng-class="{active: isActive(s)}" ng-click="selectSong(s)">{{s.SongName}}</a>
                 </div>
             </div>
@@ -28,16 +27,19 @@
     <div class="col-md-6">
         <div class="panel panel-primary text-center">
             <div class="panel-heading text-center">
-                <h1 class="panel-title">These are songs I scraped from <a href="https://twitter.com/bpm_playlist">@bpm_playlist</a></h1>
+                <h1 class="panel-title">These songs are scraped from <a href="https://twitter.com/bpm_playlist">@bpm_playlist</a></h1>
+                <p>Select a Song Name to play it</p>
             </div>
             <flash-widget song=currentSong()></flash-widget>
-            <h2>
-                Firebase Dump
-            </h2>
-            <ul>Date: {{selectedSong.Date}}</ul>
-            <ul>uri: {{selectedSong.uri}}</ul>
-            <ul>Song Name: {{selectedSong.SongName}}</ul>
-            <ul>Tweet: {{selectedSong.Tweet}}</ul>
+            <!--<div class="panel-footer">-->
+                <h2>
+                    Firebase Dump
+                </h2>
+                <ul>Date: {{selectedSong.Date}}</ul>
+                <ul>uri: {{selectedSong.uri}}</ul>
+                <ul>Song Name: {{selectedSong.SongName}}</ul>
+                <ul>Tweet: {{selectedSong.Tweet}}</ul>
+            <!--</div>-->
         </div>
     </div>
 </div>

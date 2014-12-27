@@ -18,7 +18,7 @@ var T = new Twit({
 });
 var myFirebaseRef = new Firebase("https://groovebmp.firebaseio.com/SoundCloud");
 
-start("bpm_playlist", 100);
+start("bpm_playlist", 1000);
 
 function start(Tuser, x) {
     T.get('statuses/user_timeline', {screen_name: Tuser, count: x}, function (err, data) {
