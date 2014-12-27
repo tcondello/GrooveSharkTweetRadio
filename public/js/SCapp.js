@@ -10,20 +10,22 @@ angular.module("GrooveApp", ["firebase"])
         $scope.selectedSong = {};
         $scope.currentSong = function(){return $scope.selectedSong ; };
         $scope.selectSong = function (i){
-            $scope.selectedSong = $scope.Song[i];
+            $scope.selectedSong = i;
+            $scope.selected = i;
+        };
+        $scope.isActive = function(item) {
+            return $scope.selected === item;
         };
     })
     .directive('flashWidget', function(){
         return{
             restrict: 'E',
             scope: {song: '&'},
-
             link: function(scope, elem) {
-
                 function updateDom(song){
                     if (song.$id == undefined)
                         return;
-                    elem.html('<iframe width="100%" height="50%" scrolling="no" frameborder="no"' +
+                    elem.html('<iframe width="100%" height="25%" scrolling="no" frameborder="no"' +
                         'src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/' + song.$id +
                         '&amp;color=ff6600&amp;auto_play=true&amp;show_artwork=true"></iframe>'
                     );

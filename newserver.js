@@ -18,7 +18,7 @@ var T = new Twit({
 });
 var myFirebaseRef = new Firebase("https://groovebmp.firebaseio.com/SoundCloud");
 
-start("bpm_playlist", 100)
+start("bpm_playlist", 100);
 
 function start(Tuser, x) {
     T.get('statuses/user_timeline', {screen_name: Tuser, count: x}, function (err, data) {
@@ -30,12 +30,10 @@ function start(Tuser, x) {
                 if (err) return;
                 var soundInfo = parseSoundSong(data);
                 if (!soundInfo) return;
-//                 var songs = myFirebaseRef.child(soundInfo.Date);
                 var songs = myFirebaseRef.child(soundInfo.id);
                 songs.set({
                     uri: soundInfo.uri,
                     SongName: soundInfo.SongName,
-//                     id: soundInfo.id,
                     Date: soundInfo.Date,
                     Tweet: tweet
                 });
@@ -46,7 +44,7 @@ function start(Tuser, x) {
 
 function ParsedTweet(tweet) {
     var arrayOfTweets = tweet.split("-");
-    this.tweet = tweet;
+    //this.tweet = tweet;
     this.artistsStr = arrayOfTweets[0];
     this.songStr = arrayOfTweets[1];
     this.songNm = this.songStr.split("playing");
@@ -66,12 +64,17 @@ function getSoundInfo(songName, artistName, fn) {
             data += chunk;
         });
         res.on('end', function(){
-            var obj = JSON.parse(data);
-            if(typeof obj.errors != 'undefined'){
-                console.log('ERROR: ' + obj.errors[0].error_message);
-                fn(obj.errors);
-            } else{
-                fn(0, obj);
+            res = /<html>/g.test(data);
+            if (res){
+                console.log('400 Bad Request');
+            }else{
+                var obj = JSON.parse(data);
+                if (typeof obj.errors != 'undefined') {
+                    console.log('ERROR: ' + obj.errors[0].error_message);
+                    fn(obj.errors);
+                }else{
+                    fn(0, obj);
+                }
             }
         });
         res.on('error', function(err) {
@@ -86,7 +89,6 @@ function parseSoundSong(obj) {
         result.id = obj[0].id;
         result.SongName = obj[0].title;
         result.uri = obj[0].uri;
-//         result.Date = moment().format('YYMMDDHHMMSS');
         result.Date = moment().format('l h:mm:ss a');
         if(typeof result.uri === 'undefined'){
             result.uri = 'null';
