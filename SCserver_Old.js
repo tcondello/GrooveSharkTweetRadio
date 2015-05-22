@@ -16,8 +16,7 @@ var T = new Twit({
 var myFirebaseRef = new Firebase("https://groovebmp.firebaseio.com/SoundCloud");
 
 function SoundSong (A, S){
-    var SoundKey = "acefae469fefbc074fb7ad9bb480a56d";
-    var xtraKey = "4346c8125f4f5c40ad666bacd8e96498";
+    var SoundKey = "";
     S = S.replace(/ /g,"+");
     A = A.replace(/ /g,"+");
     var url = 'http://api.soundcloud.com/tracks.json?client_id=' + SoundKey + '&q=' + A + S +'&limit=1';
