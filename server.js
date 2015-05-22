@@ -6,10 +6,10 @@ var http = require("http");
 var Twit = require("twit");
 var Firebase = require("firebase");
 var T = new Twit({
-    consumer_key:         'tQBgTC7WSC2YKDYkdQgDCPVtx',
-    consumer_secret:      'xpMbSpmSy6d4HpKT0VFch70YNqBhTydDSXbrfW3137KJw9iI4C',
-    access_token:         '1374765799-O40L3jHmUeEVZbSpzaLiLLxyGlQgRPbSgSLtaVX',
-    access_token_secret:  'OYwgOSuqLpfiOtta5n3EpVP4u4debCClsfEEaWgNwqqGh'
+    consumer_key:         '',
+    consumer_secret:      '',
+    access_token:         '',
+    access_token_secret:  ''
 });
 var BPM = "bpm_playlist";
 var countEntered = 0;
