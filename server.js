@@ -17,10 +17,10 @@ var countSkipped = 0;
 var myFirebaseRef = new Firebase("https://groovebmp.firebaseio.com/" + BPM);
 
 function TinySong (A, S){
-    //var TinyKey = "f6834955de245c39810cf059ce77da5d";
+    //var TinyKey = "*******************************";
     A = A.replace(/ /g,"+");
     S = S.replace(/ /g,"+");
-    var url = 'http://tinysong.com/b/' + A + "+" + S + '?format=json&key=f6834955de245c39810cf059ce77da5d';
+    var url = 'http://tinysong.com/b/' + A + "+" + S + '?format=json&key=*******************';
     http.get(url, function(res){
         var data = '';
         res.on('data', function (chunk){
