@@ -26,8 +26,8 @@ Tinysong api key f6834955de245c39810cf059ce77da5d
         $("#submit").click(function() {
             $.ajax({
                 type: 'GET',
-                url: 'http://tinysong.com/b/Girl+Talk+Ask+About+Me?format=json&key=f6834955de245c39810cf059ce77da5d&callback=jsonpCallback',
-//                url: 'http://tinysong.com/b/' + $("#Artist").val() + '?format=json&key=f6834955de245c39810cf059ce77da5d',
+                url: 'http://tinysong.com/b/Girl+Talk+Ask+About+Me?format=json&key=#######&callback=jsonpCallback',
+//                url: 'http://tinysong.com/b/' + $("#Artist").val() + '?format=json&key=#####',
                 dataType: 'jsonp',
                 success: function (response) {
                     console.log(response);
@@ -52,7 +52,7 @@ Tinysong api key f6834955de245c39810cf059ce77da5d
 
     $("#submit").click(function() {
         $.ajax({
-            url: 'www.http://tinysong.com/b/' + $("#Artist").val() + '?format=json&key=f6834955de245c39810cf059ce77da5d',
+            url: 'www.http://tinysong.com/b/' + $("#Artist").val() + '?format=json&key=#######',
             type: 'get',
             dataType: 'json',
             success: function (response) {
