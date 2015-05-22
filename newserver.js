@@ -54,7 +54,7 @@ function ParsedTweet(tweet) {
 }
 
 function getSoundInfo(songName, artistName, fn) {
-    var soundKey = "acefae469fefbc074fb7ad9bb480a56d";
+    var soundKey = "";
     var song = songName.replace(/ /g,"+");
     var artist = artistName.replace(/ /g,"+");
     var url = 'http://api.soundcloud.com/tracks.json?client_id=' + soundKey + '&q=' + artist + song +'&limit=1';
