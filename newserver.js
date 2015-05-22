@@ -11,10 +11,10 @@ var Firebase = require("firebase");
 var CronJob = require('cron').CronJob;
 var moment = require('moment');
 var T = new Twit({
-    consumer_key:         'tQBgTC7WSC2YKDYkdQgDCPVtx',
-    consumer_secret:      'xpMbSpmSy6d4HpKT0VFch70YNqBhTydDSXbrfW3137KJw9iI4C',
-    access_token:         '1374765799-O40L3jHmUeEVZbSpzaLiLLxyGlQgRPbSgSLtaVX',
-    access_token_secret:  'OYwgOSuqLpfiOtta5n3EpVP4u4debCClsfEEaWgNwqqGh'
+    consumer_key:         '',
+    consumer_secret:      '',
+    access_token:         '',
+    access_token_secret:  ''
 });
 var myFirebaseRef = new Firebase("https://groovebmp.firebaseio.com/SoundCloud");
 
